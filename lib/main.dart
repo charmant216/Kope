@@ -1,153 +1,77 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(CalculatorApp());
+  runApp(MentorshipApp());
 }
 
-class CalculatorApp extends StatelessWidget {
+class MentorshipApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Calculatrice Simple',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: CalculatorHomePage(),
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
     );
   }
 }
 
-class CalculatorHomePage extends StatefulWidget {
-  @override
-  _CalculatorHomePageState createState() => _CalculatorHomePageState();
-}
-
-class _CalculatorHomePageState extends State<CalculatorHomePage> {
-  String _displayText = '0';
-  String _operand = '';
-  double? _firstNumber;
-  double? _secondNumber;
-
-  void _onButtonPressed(String value) {
-    setState(() {
-      if (RegExp(r'[0-9]').hasMatch(value)) {
-        // Gérer les chiffres
-        if (_displayText == '0') {
-          _displayText = value;
-        } else {
-          _displayText += value;
-        }
-      } else if (['+', '-', '×', '÷'].contains(value)) {
-        // Gérer les opérateurs
-        _operand = value;
-        _firstNumber = double.tryParse(_displayText);
-        _displayText = '0';
-      } else if (value == '=') {
-        // Gérer le calcul
-        _secondNumber = double.tryParse(_displayText);
-        if (_firstNumber != null && _secondNumber != null) {
-          switch (_operand) {
-            case '+':
-              _displayText = (_firstNumber! + _secondNumber!).toString();
-              break;
-            case '-':
-              _displayText = (_firstNumber! - _secondNumber!).toString();
-              break;
-            case '×':
-              _displayText = (_firstNumber! * _secondNumber!).toString();
-              break;
-            case '÷':
-              if (_secondNumber! != 0) {
-                _displayText = (_firstNumber! / _secondNumber!).toString();
-              } else {
-                _displayText = 'Erreur';
-              }
-              break;
-          }
-        }
-        _operand = '';
-        _firstNumber = null;
-        _secondNumber = null;
-      } else if (value == 'C') {
-        // Gérer la réinitialisation
-        _displayText = '0';
-        _operand = '';
-        _firstNumber = null;
-        _secondNumber = null;
-      }
-    });
-  }
-
-  Widget _buildButton(String text, Color color) {
-    return Expanded(
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          padding: EdgeInsets.all(20),
-        ),
-        onPressed: () => _onButtonPressed(text),
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 24, color: Colors.white),
-        ),
-      ),
-    );
-  }
+class HomePage extends StatelessWidget {
+  // Les données des groupes et membres
+  final Map<String, List<String>> groups = {
+    'Organiser': ['Tacite', 'Amani'],
+    'Mentor': ['Georges', 'Bénédict', 'Kevin'],
+    'Leaner': ['Charmant', 'Israël', 'Jacques'],
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculatrice Simple'),
+        title: Text('Programme de mentora'),
+        backgroundColor: Colors.blueAccent,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.black12,
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.all(20),
-              child: Text(
-                _displayText,
-                style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
-              ),
+      body: ListView(
+        children: groups.entries.map((entry) {
+          return GroupCard(groupName: entry.key, members: entry.value);
+        }).toList(),
+      ),
+    );
+  }
+}
+
+// Widget pour afficher un groupe
+class GroupCard extends StatelessWidget {
+  final String groupName;
+  final List<String> members;
+
+  GroupCard({required this.groupName, required this.members});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(10.0),
+      elevation: 5.0,
+      child: ExpansionTile(
+        title: Text(
+          groupName,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        children: members.map((member) {
+          return ListTile(
+            leading: Icon(Icons.person, color: Colors.purple),
+            title: Text(
+              member,
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-          ),
-          Column(
-            children: [
-              Row(
-                children: [
-                  _buildButton('7', Colors.blue),
-                  _buildButton('8', Colors.blue),
-                  _buildButton('9', Colors.blue),
-                  _buildButton('÷', Colors.orange),
-                ],
-              ),
-              Row(
-                children: [
-                  _buildButton('4', Colors.blue),
-                  _buildButton('5', Colors.blue),
-                  _buildButton('6', Colors.blue),
-                  _buildButton('×', Colors.orange),
-                ],
-              ),
-              Row(
-                children: [
-                  _buildButton('1', Colors.blue),
-                  _buildButton('2', Colors.blue),
-                  _buildButton('3', Colors.blue),
-                  _buildButton('-', Colors.orange),
-                ],
-              ),
-              Row(
-                children: [
-                  _buildButton('C', Colors.red),
-                  _buildButton('0', Colors.blue),
-                  _buildButton('=', Colors.green),
-                  _buildButton('+', Colors.orange),
-                ],
-              ),
-            ],
-          ),
-        ],
+            subtitle: Text('Contact téléphonique'),
+            trailing: Icon(Icons.phone, color: Colors.green),
+            onTap: () {
+              // Action pour simuler un appel (ou autre action)
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Appel à $member...')),
+              );
+            },
+          );
+        }).toList(),
       ),
     );
   }
