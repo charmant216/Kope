@@ -67,7 +67,7 @@ class GroupCard extends StatelessWidget {
             onTap: () {
               // Action pour simuler un appel (ou autre action)
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Appel en cour à $member...')),
+                SnackBar(content: Text('Appel en cour à : $member...')),
               );
             },
           );
