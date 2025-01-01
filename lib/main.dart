@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Programme de mentora'),
+        title: Text('Programme de mentora année 2024-2025'),
         backgroundColor: Colors.blueAccent,
       ),
       body: ListView(
@@ -67,7 +67,7 @@ class GroupCard extends StatelessWidget {
             onTap: () {
               // Action pour simuler un appel (ou autre action)
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Appel à $member...')),
+                SnackBar(content: Text('Appel en cour à $member...')),
               );
             },
           );
