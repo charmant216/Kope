@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Programme de mentora année 2024-2025'),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.grey,
       ),
       body: ListView(
         children: groups.entries.map((entry) {
