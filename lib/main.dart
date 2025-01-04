@@ -14,28 +14,115 @@ class MentorshipApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   // Les données des groupes et membres
   final Map<String, List<String>> groups = {
     'Organiser': ['Tacite', 'Amani'],
     'Mentor': ['Georges', 'Bénédict', 'Kevin'],
     'Leaner': ['Charmant', 'Israël', 'Jacques'],
-    'Other' : ['Sam', 'Hermès', 'Christian', 'Destion']
+    'Other': ['Sam', 'Hermès', 'Christian', 'Destion']
   };
+  int _currentIndex = 0;
+  List <String> listUser = [];
 
+getAllUser(){
+  for (int i = 0; i < groups.length; i++) {
+    List<String> value= groups.values.toList()[i];
+    print(value);
+    for (int j=0; j< value.length;j++){
+      print(value[j]);
+      listUser.add(value[j]);
+    }
+  }
+}
+@override
+  void initState() {
+   getAllUser();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+
+    // Liste des widgets pour chaque page
+    final List<Widget> _pages = [
+      Center(
+        child: ListView(
+          children: groups.entries.map((entry) {
+            return GroupCard(groupName: entry.key, members: entry.value);
+          }).toList(),
+        ),
+      ),
+      SingleChildScrollView(
+        child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ...List.generate(listUser.length, (index) {
+                    return Card(child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(listUser[index]),
+                        ),
+                      ],
+                    ));
+                  })
+                ],
+              ),
+            )),
+      ),
+      Center(child: Text('Paramètres', style: TextStyle(fontSize: 24))),
+      Center(child: Text('À propos', style: TextStyle(fontSize: 24))),
+    ];
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Programme de mentora année 2024-2025'),
-        backgroundColor: Colors.grey,
-      ),
-      body: ListView(
-        children: groups.entries.map((entry) {
-          return GroupCard(groupName: entry.key, members: entry.value);
-        }).toList(),
-      ),
-    );
+
+      //bottomNavigationBar
+        body: _pages[_currentIndex], // Affiche la page sélectionnée
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Color(0xfffdf3cd),
+          elevation: 0,
+          currentIndex: _currentIndex,
+          // Indique l'onglet sélectionné
+          onTap: (int index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Accueil',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'All user',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Paramètres',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info),
+              label: 'À propos',
+            ),
+          ],
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          type:
+          BottomNavigationBarType.fixed, // Permet d'ajouter plus de 3 items
+        ),
+        appBar: AppBar(
+          title: Text('Programme de mentora année 2024-2025'),
+          backgroundColor: Color(0xb0fdf3cd),
+          elevation: 0,
+        ));
   }
 }
 
