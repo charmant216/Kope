@@ -20,6 +20,7 @@ class HomePage extends StatelessWidget {
     'Organiser': ['Tacite', 'Amani'],
     'Mentor': ['Georges', 'Bénédict', 'Kevin'],
     'Leaner': ['Charmant', 'Israël', 'Jacques'],
+    'Other' : ['Sam', 'Hermès', 'Christian', 'Destion']
   };
 
   @override
