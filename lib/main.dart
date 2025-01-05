@@ -27,10 +27,12 @@ class _HomePageState extends State<HomePage> {
     'Leaner': ['Charmant', 'Israël', 'Jacques'],
     'Other': ['Sam', 'Hermès', 'Christian', 'Destion']
   };
+  //initialisation de la première page par defaut
   int _currentIndex = 0;
   List <String> listUser = [];
 
 getAllUser(){
+  //cette boucle affiche tous les utilisateurs ce trouvant dans acceuil dans la page all user.
   for (int i = 0; i < groups.length; i++) {
     List<String> value= groups.values.toList()[i];
     print(value);
@@ -85,7 +87,7 @@ getAllUser(){
       //bottomNavigationBar
         body: _pages[_currentIndex], // Affiche la page sélectionnée
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xfffdf3cd),
+          backgroundColor: Color(0xfffdf3cd), //Cette coloration nous permet de changer différantes variétés des couleurs
           elevation: 0,
           currentIndex: _currentIndex,
           // Indique l'onglet sélectionné
