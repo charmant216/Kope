@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     'Organiser': ['Tacite', 'Amani'],
     'Mentor': ['Georges', 'Bénédict', 'Kevin'],
     'Leaner': ['Charmant', 'Israël', 'Jacques'],
-    'Other': ['Sam', 'Hermès', 'Christian', 'Destin']
+    'Other': ['Sam', 'Hermès', 'Christian', 'Destin', 'Bienv', 'Salufa']
   };
   //initialisation de la première page par defaut
   int _currentIndex = 0;
