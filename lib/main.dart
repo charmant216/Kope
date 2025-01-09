@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Les données des groupes et membres
+  // Les données des groupes et des membres
   final Map<String, List<String>> groups = {
     'Organiser': ['Tacite', 'Amani'],
     'Mentor': ['Georges', 'Bénédict', 'Kevin'],
@@ -96,7 +96,7 @@ getAllUser(){
               _currentIndex = index;
             });
           },
-
+          //Le BottomNavigationBar du bas de l'appli
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
